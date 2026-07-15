@@ -1,12 +1,20 @@
 import multer from "multer";
 import path from "path";
 import fs from "fs";
+import { Env } from "./env.config";
 
-import {
-  ALLOWED_MIME_TYPES,
-  MAX_FILE_SIZE,
-  MAX_FILES,
-} from "../constant/multer.js";
+export const MAX_FILE_SIZE = Env.MAX_FILE_SIZE
+export const MAX_FILES = Env.MAX_FILES;
+export const ALLOWED_MIME_TYPES = [
+  'image/jpeg',
+  'image/png',
+  'image/webp',
+  'image/svg+xml',
+  'image/gif',
+
+];
+
+
 
 if (!fs.existsSync("uploads")) {
   fs.mkdirSync("uploads");
