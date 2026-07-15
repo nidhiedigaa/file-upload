@@ -1,3 +1,4 @@
+import { get } from 'http';
 import { getEnv } from '../utis/get-env.js';
 
 const envConfig = () => ({
@@ -11,6 +12,8 @@ const envConfig = () => ({
   JWT_EXPIRES_IN: getEnv('JWT_EXPIRES_IN', '1d'),
 
   LOG_LEVEL: getEnv('LOG_LEVEL', 'info'),
+  MAX_FILE_SIZE:getEnv('MAX_FILE_SIZE',''),
+  MAX_FILES:getEnv('MAX_FILES',10),
 
   AWS_ACCESS_KEY: getEnv('AWS_ACCESS_KEY',''),
   AWS_SECRET_KEY: getEnv('AWS_SECRET_KEY',''),
