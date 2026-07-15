@@ -1,7 +1,7 @@
 import multer from "multer";
 import path from "path";
 import fs from "fs";
-import { Env } from "./env.config";
+import { Env } from "./env.config.js";
 
 export const MAX_FILE_SIZE = Env.MAX_FILE_SIZE
 export const MAX_FILES = Env.MAX_FILES;
