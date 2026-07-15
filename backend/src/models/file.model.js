@@ -1,6 +1,26 @@
 import mongoose from "mongoose";
-import { formatBytes } from "../utis/format-byte.js";
-// Enum replacement
+
+
+
+
+const BYTE_UNIT = 1024;
+
+export const formatBytes = (bytes)=> {
+  const units = ['B', 'KB', 'MB', 'GB', 'TB'];
+  let i = 0;
+
+  while (bytes >= BYTE_UNIT && i < units.length - 1) {
+    bytes /= BYTE_UNIT;
+    i++;
+  }
+
+
+
+  const value = Number(bytes.toFixed(2));
+
+  return `${value}${units[i]}`;
+};
+
 export const UploadSourceEnum = {
   WEB: "WEB",
   API: "API",
@@ -70,7 +90,7 @@ const FileSchema = new mongoose.Schema(
   }
 );
 
-// Static method
+
 FileSchema.statics.calculateUsage = async function (userId) {
   const result = await this.aggregate([
     {
@@ -89,7 +109,7 @@ FileSchema.statics.calculateUsage = async function (userId) {
   return result[0]?.totalSize || 0;
 };
 
-// Indexes
+
 FileSchema.index({ userId: 1 });
 FileSchema.index({ createdAt: -1 });
 

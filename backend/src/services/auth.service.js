@@ -4,6 +4,12 @@ import StorageModel from "../models/storage.model.js";
 
 import { signJwtToken } from "../utis/jwt.js";
 
+export const registerSerive=async(body)=>
+{
+  const {email}=body
+  
+}
+
 export const registerService = async (body) => {
   const { email } = body;
 

@@ -4,6 +4,7 @@ import cors from "cors";
 import helmet from "helmet";
 import passport from "passport";
 import "./config/passport.config.js"
+import cookieParser from "cookie-parser"
 import { Env } from "./config/env.config.js";
 import { connectDatabase,disconnectDatabase } from "./config/database.config.js";
 import { errorHandler } from "./middlewares/errorHandler.middleware.js";
@@ -11,6 +12,7 @@ import internalAuthRoutes from "./routes/auth.index.js";
 
 
 const app = express();
+
 
 const allowedOrigins = Env.ALLOWED_ORIGINS
   ? Env.ALLOWED_ORIGINS.split(",")
@@ -28,6 +30,7 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+app.use(cookieParser())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(helmet());
@@ -36,11 +39,12 @@ app.use(`${Env.BASE_PATH}`,internalAuthRoutes)
 
 app.get("/", (req, res) => {
   res.status(200).json({
-    message: "Hello Subscribe to the channel",
+    message: "Hello Welcome",
   });
 });
 
 app.use(errorHandler);
+
 
 
 async function startServer() {
@@ -62,7 +66,7 @@ async function startServer() {
           server.close(() => {
             console.log('HTTP server closed');
           });
-          //disconnect db
+         
           await disconnectDatabase()
           process.exit(0);
         } catch (error) {

@@ -1,10 +1,8 @@
-// import path from 'path';
-import { PassThrough, Readable } from 'stream';
 import { v4 as uuidv4 } from 'uuid';
-// import archiver from 'archiver';
 import FileModel, { UploadSourceEnum } from '../models/file.model.js';
 import UserModel from '../models/user.model.js';
-import { sanitizeFilename } from '../utis/helper.js';
+import alterFileName from '../utis/helper.js';
+
 import { Env } from '../config/env.config.js';
 
 
@@ -24,14 +22,14 @@ export const uploadFilesService = async (userId, files, uploadedVia) => {
       try {
         const createdFile = await FileModel.create({
           userId,
-          storageKey: file.filename, // saved filename
+          storageKey: file.filename, 
           originalName: file.originalname,
           uploadVia: uploadedVia,
           size: file.size,
           ext: path.extname(file.originalname).slice(1).toLowerCase(),
           url: "",
           mimeType: file.mimetype,
-          filePath: file.path, // full local path
+          filePath: file.path, 
         });
 
         return {
@@ -117,13 +115,12 @@ export const getAllFilesService = async (userId, filter, pagination) => {
     },
   };
 };
-
+import { PassThrough, Readable } from 'stream';
 import mongoose from "mongoose";
 import fs from "fs";
 import path from "path";
 import archiver from "archiver";
 
-// import FileModel from "../models/file.model.js";
 
 export const getFileUrlService = async (fileId) => {
   const file = await FileModel.findById(fileId);
@@ -133,7 +130,7 @@ export const getFileUrlService = async (fileId) => {
   }
 
   return {
-    url: `http://localhost:5000/uploads/${file.storageKey}`,
+    url: `http://localhost:8000/uploads/${file.storageKey}`,
     contentType: file.mimeType,
     fileSize: file.size,
   };
@@ -207,7 +204,7 @@ export const downloadFilesService = async (userId, fileIds) => {
     throw new Error("No files found");
   }
 
-  // Single file download
+
   if (files.length === 1) {
     return {
       url: `http://localhost:5000/uploads/${files[0].storageKey}`,
@@ -215,7 +212,7 @@ export const downloadFilesService = async (userId, fileIds) => {
     };
   }
 
-  // Multiple files → zip them
+
   const url = await handleMultipleFilesDownload(files, userId);
 
   return {

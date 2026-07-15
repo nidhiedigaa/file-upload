@@ -31,9 +31,9 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-// Runs before saving a user
+
 userSchema.pre("save", async function (next) {
-  // Only hash if password was changed
+  
   if (this.isModified("password")) {
     if (this.password) {
       this.password = await hashValue(this.password);
@@ -43,12 +43,12 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-// Compare entered password with hashed password
+
 userSchema.methods.comparePassword = async function (password) {
   return await compareValue(password, this.password);
 };
 
-// Remove password before sending user to client
+
 userSchema.methods.omitPassword = function () {
   const user = this.toObject();
   delete user.password;

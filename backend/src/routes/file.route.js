@@ -10,7 +10,7 @@ import { CheckStorageAvailability } from "../middlewares/check-storage.middlewar
 
 const filesRoutes = Router();
 
-// Upload files
+
 filesRoutes.post(
   "/upload",
   multiUpload,
@@ -18,13 +18,13 @@ filesRoutes.post(
   uploadFilesViaWebController
 );
 
-// Download files
+
 filesRoutes.post("/download", downloadFilesController);
 
-// Get all uploaded files
+
 filesRoutes.get("/all", getAllFilesController);
 
-// Delete multiple files
-filesRoutes.delete("/bulk-delete", deleteFilesController);
+
+filesRoutes.delete("/delete-all", deleteFilesController);
 
 export default filesRoutes;

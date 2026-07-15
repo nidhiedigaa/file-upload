@@ -1,9 +1,28 @@
 import mongoose, { Schema } from "mongoose";
 import FileModel from "./file.model.js";
-import { formatBytes } from "../utis/format-byte.js";
+
 import { ErrorCodeEnum } from "../enums/error-code.enum.js";
 
-export const STORAGE_QUOTA = 2 * 1024 * 1024 * 1024; // 2GB
+export const STORAGE_QUOTA = 2 * 1024 * 1024 * 1024; 
+
+
+const BYTE_UNIT = 1024;
+
+export const formatBytes = (bytes)=> {
+  const units = ['B', 'KB', 'MB', 'GB', 'TB'];
+  let i = 0;
+
+  while (bytes >= BYTE_UNIT && i < units.length - 1) {
+    bytes /= BYTE_UNIT;
+    i++;
+  }
+
+
+
+  const value = Number(bytes.toFixed(2));
+
+  return `${value}${units[i]}`;
+};
 
 const StorageSchema = new Schema(
   {

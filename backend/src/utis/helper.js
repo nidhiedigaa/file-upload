@@ -1,3 +1,5 @@
-export function sanitizeFilename(filename) {
+function sanitizeFilename(filename) {
   return filename.trim();
 }
+
+export default sanitizeFilename
